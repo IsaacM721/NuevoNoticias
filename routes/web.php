@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PostController;
+
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/noticia/{slug}', [PostController::class, 'show'])->name('post.show');

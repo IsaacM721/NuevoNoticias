@@ -35,4 +35,8 @@ return [
         ],
     ],
 
+    'wordpress' => [
+        'url' => env('WORDPRESS_URL', 'https://mydomain.com/wp'),
+    ],
+
 ];
