@@ -28,6 +28,7 @@ class NewsGrid extends Component
             ];
         })->toArray();
 
+        // Mock fallback if database is empty
         if (empty($this->posts)) {
             $this->posts = [
                 [
@@ -77,7 +78,11 @@ class NewsGrid extends Component
             $okCat = $this->category ? $post['categoria'] === $this->category : true;
             $okTag = $this->tag ? in_array($this->tag, $post['etiquetas']) : true;
             $query = strtolower($this->search);
-            $okSearch = $query ? str_contains(strtolower($post['titulo']), $query) || str_contains(strtolower($post['categoria']), $query) : true;
+            $okSearch = $query
+                ? str_contains(strtolower($post['titulo']), $query)
+                    || str_contains(strtolower($post['categoria']), $query)
+                : true;
+
             return $okCat && $okTag && $okSearch;
         });
     }
@@ -86,6 +91,7 @@ class NewsGrid extends Component
     {
         $categorias = collect($this->posts)->pluck('categoria')->unique();
         $tags = collect($this->posts)->pluck('etiquetas')->flatten()->unique();
+
         return view('livewire.news-grid', [
             'posts' => $this->filteredPosts,
             'categorias' => $categorias,
@@ -93,4 +99,3 @@ class NewsGrid extends Component
         ]);
     }
 }
-

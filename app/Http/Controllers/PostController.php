@@ -10,16 +10,29 @@ class PostController extends Controller
 {
     public function show(string $slug)
     {
-        $url = rtrim(config('services.wordpress.url'), '/') . '/wp-json/wp/v2/posts?slug=' . $slug . '&_embed';
+        $url = rtrim(config('services.wordpress.url'), '/') . "/wp-json/wp/v2/posts?slug={$slug}&_embed";
         $response = Http::get($url);
+
         if (! $response->successful() || empty($response->json())) {
             abort(404);
         }
 
         $post = $response->json()[0];
 
+        $postFormatted = [
+            'slug' => $post['slug'],
+            'title' => $post['title']['rendered'],
+            'content' => $post['content']['rendered'],
+            'excerpt' => strip_tags($post['excerpt']['rendered']),
+            'image' => Wordpress::image($post),
+            'category' => Wordpress::category($post),
+            'tags' => Wordpress::tags($post),
+            'author' => $post['_embedded']['author'][0]['name'] ?? 'Autor',
+            'date' => Carbon::parse($post['date'])->format('d \d\e F, Y'),
+        ];
+
         return view('post', [
-            'post' => $post,
+            'post' => $postFormatted,
         ]);
     }
 }

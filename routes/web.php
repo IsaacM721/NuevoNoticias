@@ -10,6 +10,7 @@ use App\Http\Controllers\PostController;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/noticia/{slug}', [PostController::class, 'show'])->name('post.show');
 
+// Autenticación sencilla (login/logout)
 Route::get('/login', function () {
     return view('auth.login');
 })->middleware('guest')->name('login');
@@ -30,6 +31,7 @@ Route::post('/logout', function (Request $request) {
     return redirect('/');
 })->name('logout');
 
+// Área admin protegida
 Route::middleware('auth')->group(function () {
     Route::get('/admin', function () {
         return view('admin.index');
