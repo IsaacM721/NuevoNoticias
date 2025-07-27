@@ -13,9 +13,14 @@
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100 transition-colors min-h-full flex flex-col">
     <header class="bg-white dark:bg-gray-800 shadow">
-        <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+        <div class="container mx-auto px-4 py-3 flex items-center justify-between space-x-4">
             <div class="font-bold text-xl text-blue-600">NoticiasDM</div>
+            <div class="flex-1 hidden md:block">
+                <input type="search" placeholder="Buscar..." class="w-full border rounded px-3 py-1" />
+            </div>
             <div class="hidden md:flex items-center space-x-4">
+                <a href="#" class="text-sm hover:underline">Escritores</a>
+                <a href="{{ route('login') }}" class="text-sm hover:underline">Escritor</a>
                 <livewire:theme-toggle />
             </div>
             <button class="md:hidden text-gray-700 dark:text-gray-200" @click="open = !open">☰</button>
@@ -39,6 +44,8 @@
                         <li><a href="#" class="px-2 py-1 bg-gray-200 dark:bg-gray-700 rounded text-sm">#urbano</a></li>
                     </ul>
                 </div>
+                <a href="#" class="block px-2 py-1">Escritores</a>
+                <a href="{{ route('login') }}" class="block px-2 py-1">Escritor</a>
                 <livewire:theme-toggle />
             </nav>
         </div>

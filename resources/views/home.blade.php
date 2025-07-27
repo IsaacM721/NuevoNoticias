@@ -6,6 +6,22 @@
 <div class="container mx-auto px-4 py-6 space-y-6">
     @if(count($posts))
         @php $featured = $posts[0]; $others = array_slice($posts,1); @endphp
+
+        @php
+            $categories = collect($posts)->pluck('category')->unique();
+            $tags = collect($posts)->pluck('tags')->flatten()->unique();
+        @endphp
+        <div class="flex flex-wrap gap-2 mb-4">
+            @foreach($categories as $cat)
+                <span class="px-3 py-1 bg-gray-200 dark:bg-gray-700 rounded text-sm">{{ $cat }}</span>
+            @endforeach
+        </div>
+        <div class="flex flex-wrap gap-2 mb-6">
+            @foreach($tags as $tag)
+                <span class="text-sm text-blue-600">{{ $tag }}</span>
+            @endforeach
+        </div>
+
         <div class="md:flex bg-white dark:bg-gray-800 rounded-xl shadow overflow-hidden">
             <img src="{{ $featured['image'] }}" alt="{{ $featured['title'] }}" class="w-full md:w-1/2 h-64 object-cover">
             <div class="p-6 md:w-1/2 flex flex-col">
@@ -20,21 +36,6 @@
                 <span class="text-xs text-gray-500 mb-2">{{ $featured['author'] }} - {{ $featured['date'] }}</span>
                 <a href="{{ route('post.show', $featured['slug']) }}" class="text-blue-600 hover:underline">Leer más</a>
             </div>
-        </div>
-
-        @php
-            $categories = collect($posts)->pluck('category')->unique();
-            $tags = collect($posts)->pluck('tags')->flatten()->unique();
-        @endphp
-        <div class="flex flex-wrap gap-2 mt-4">
-            @foreach($categories as $cat)
-                <span class="px-3 py-1 bg-gray-200 dark:bg-gray-700 rounded text-sm">{{ $cat }}</span>
-            @endforeach
-        </div>
-        <div class="flex flex-wrap gap-2">
-            @foreach($tags as $tag)
-                <span class="text-sm text-blue-600">{{ $tag }}</span>
-            @endforeach
         </div>
 
         <div class="grid md:grid-cols-3 gap-6">
