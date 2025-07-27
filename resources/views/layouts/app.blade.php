@@ -4,23 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $title ?? 'NoticiasDM' }}</title>
+
+    <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        tailwind.config = { darkMode: 'class' };
+        tailwind.config = {
+            darkMode: 'class',
+        };
     </script>
+
+    <!-- Alpine -->
     <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
+    <!-- Livewire -->
     @livewireStyles
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100 transition-colors min-h-full flex flex-col">
+
+    <!-- HEADER -->
     <header class="bg-white dark:bg-gray-800 shadow">
-        <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+        <div class="container mx-auto px-4 py-3 flex items-center justify-between space-x-4">
             <div class="font-bold text-xl text-blue-600">NoticiasDM</div>
+
+            <div class="flex-1 hidden md:block">
+                <input type="search" placeholder="Buscar..." class="w-full border rounded px-3 py-1 text-sm dark:bg-gray-700 dark:text-white" />
+            </div>
+
             <div class="hidden md:flex items-center space-x-4">
-                <input type="search" placeholder="Buscar..." class="border rounded px-2 py-1 text-sm">
                 <livewire:theme-toggle />
             </div>
+
             <button class="md:hidden text-gray-700 dark:text-gray-200" @click="open = !open">☰</button>
         </div>
+
+        <!-- MENÚ HAMBURGUESA (mobile) -->
         <div class="md:hidden" x-show="open" @click.away="open = false">
             <nav class="px-4 py-2 bg-white dark:bg-gray-800 border-t space-y-4">
                 <div>
@@ -44,9 +61,13 @@
             </nav>
         </div>
     </header>
+
+    <!-- CONTENIDO -->
     <main class="flex-1">
         @yield('content')
     </main>
+
+    <!-- Livewire -->
     @livewireScripts
 </body>
 </html>
